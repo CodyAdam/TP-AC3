@@ -27,18 +27,17 @@ public class Equiv extends Expression {
 	}
 
 	public boolean evalue() throws RuntimeException {
-		//TODO
-		return false;
+		return e1.evalue() == e2.evalue();
 	}
 
 	public Set<String> atomes() {
-		//TODO
-		return null;
+		Set<String> set = e1.atomes();
+		set.addAll(e2.atomes());
+		return set;
 	}
 
 	public Expression remplace(String s, boolean b) {
-		//TODO
-		return null;
+		return new Equiv(e1.remplace(s, b), e2.remplace(s, b));
 	}
 
 }
