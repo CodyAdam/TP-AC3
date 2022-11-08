@@ -22,7 +22,7 @@ public class Main {
 		ordre_atomes.add("y");
 		System.out.println("\n Arbre de exp : \n" + exp.arbre(ordre_atomes)); // <- que se passe-t-il ?
 		Expression exp2 = new Et(new Atome("x"), new Atome("y")); // représente (x ^ y)
-		System.out.println("\n Arbre de exp2 : \n" + exp2.arbre(ordre_atomes));
+		System.out.println("\nArbre de exp2 : \n" + exp2.arbre(ordre_atomes));
 		*/
 
 		// EXO 2
@@ -31,12 +31,20 @@ public class Main {
 		System.out.println(exp3.atomes()); // affiche la liste des atomes (=variables booléennes) présents dans exp
 
 		// Affichage de l'arbre associé à l'expression exp pour l'ordre x1 > y1 > x2 > y2
-
+		
 		List<String> ordre_atomes3 = new LinkedList<String>();
 		ordre_atomes3.add("x1");
 		ordre_atomes3.add("y1");
 		ordre_atomes3.add("x2");
 		ordre_atomes3.add("y2");
-		System.out.println("\n Arbre de exp3 : \n" + exp3.arbre(ordre_atomes3));
+		System.out.println("\nArbre de exp3 : \n" + exp3.arbre(ordre_atomes3));
+		
+		// Affichage de l'arbre associé à l'expression exp pour l'ordre x1 > x2 > y1 > y2
+		List<String> ordre_atomes4 = new LinkedList<String>();
+		ordre_atomes4.add("x1");
+		ordre_atomes4.add("x2");
+		ordre_atomes4.add("y1");
+		ordre_atomes4.add("y2");
+		System.out.println("\nArbre de exp4 : \n" + exp3.arbre(ordre_atomes4));
 	}
 }
