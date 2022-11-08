@@ -23,9 +23,9 @@ public class Atome extends Expression {
 
 	public Expression remplace(String s, boolean b) {
 		if(s.equals(name)){
-			return(new Constante(true));
+			return(new Constante(b));
 		}else{
-			return(new Constante(false));
+			return(new Constante(b));
 		}
 	}
 
