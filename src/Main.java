@@ -6,7 +6,7 @@ import expression.*;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void partie1et2() {
 
 		// ----------------- Exo1 -----------------
 		Expression exp = new Et(new Atome("x"), new Atome("y")); // représente (x ^ y)
@@ -56,16 +56,24 @@ public class Main {
 
 		// ----------------- Exo5 -----------------
 
-		
 		// représente ( (x1 <=> y1) ^ (x2 <=> y2) )
 		ROBDD robdd_exp3_ordre1 = exp3.robdd(ordre_atomes3);
 		ROBDD robdd_exp3_ordre2 = exp3.robdd(ordre_atomes4);
-		System.out.println("\nROBDD de exp3 avec x1 > y1 > x2 > y2: \n" +robdd_exp3_ordre1);
-		System.out.println("\nROBDD de exp3 avec x1 > x2 > y1 > y2: \n" +robdd_exp3_ordre2);
+		System.out.println("\nROBDD de exp3 avec x1 > y1 > x2 > y2: \n" + robdd_exp3_ordre1);
+		System.out.println("\nROBDD de exp3 avec x1 > x2 > y1 > y2: \n" + robdd_exp3_ordre2);
 
 		// ----------------- Exo6 -----------------
 
 		System.out.println("\nPath satisfiability exp3: " + robdd_exp3_ordre1.trouve_sat());
 		System.out.println("\nPath satisfiability exp3: " + robdd_exp3_ordre2.trouve_sat());
+	}
+
+	public static void partie3() {
+
+	}
+
+	public static void main(String[] args) {
+		// partie1et2();
+		partie3();
 	}
 }
