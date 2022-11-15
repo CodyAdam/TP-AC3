@@ -31,7 +31,8 @@ public class Equiv extends Expression {
 	}
 
 	public Set<String> atomes() {
-		Set<String> set = e1.atomes();
+		Set<String> set = new HashSet<String>();
+		set.addAll(e1.atomes());
 		set.addAll(e2.atomes());
 		return set;
 	}

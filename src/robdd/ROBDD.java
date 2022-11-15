@@ -3,6 +3,7 @@ package robdd;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 //Représente un ROBDD sous forme de liste de Noeud_ROBDD
 public class ROBDD {
@@ -43,10 +44,34 @@ public class ROBDD {
 			if (noeud.getNom().equals(nom) &&
 					noeud.getIdFilsDroit() == fd &&
 					noeud.getIdFilsGauche() == fg) {
-				return i;
+				return noeud.getId();
 			}
 		}
 		return -1;
 	}
 
+	// seek one of the path leading to 1 in the tree
+	// return the path as a string
+	public String trouve_sat() {
+		// find path that leads to 1
+		Queue<Integer> q = new LinkedList<Integer>();
+		q.add(1);
+		String res = "";
+		while (q.size() > 0) {
+			int id = q.poll();
+			for (Noeud_ROBDD n : R) {
+				if (n.getIdFilsDroit() == id || n.getIdFilsGauche() == id) {
+					res += n.getNom();
+					if (n.getIdFilsDroit() == id) {
+						res += "=1  ";
+					} else {
+						res += "=0  ";
+					}
+					q.add(n.getId());
+					break;
+				}
+			}
+		}
+		return res.equals("") ? "Pas de chemin" : res;
+	}
 }

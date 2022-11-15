@@ -12,24 +12,24 @@ public class Atome extends Expression {
 	}
 
 	public boolean evalue() throws RuntimeException {
-		throw new RuntimeException("L'expression ne peut pas être évaluée car elle contient (au moins) l'atome "+name);
+		throw new RuntimeException("L'expression ne peut pas être évaluée car elle contient (au moins) l'atome " + name);
 	}
 
 	public Set<String> atomes() {
-		Set<String> s =new HashSet<String>();
+		Set<String> s = new HashSet<String>();
 		s.add(name);
 		return s;
 	}
 
 	public Expression remplace(String s, boolean b) {
-		if(s.equals(name)){
-			return(new Constante(b));
-		}else{
-			return(this);
+		if (s.equals(name)) {
+			return (new Constante(b));
+		} else {
+			return (new Atome(this.name));
 		}
 	}
 
-	public Expression simplifier(){
+	public Expression simplifier() {
 		return this;
 	}
 

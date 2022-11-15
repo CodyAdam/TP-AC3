@@ -27,11 +27,19 @@ public abstract class Expression {
 	public abstract Expression simplifier();
 
 	public boolean estVrai() {
-		return this instanceof Constante && ((Constante) this).evalue();
+		try {
+			return evalue();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean estFaux() {
-		return this instanceof Constante && !((Constante) this).evalue();
+		try {
+			return !evalue();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	// construit l'arbre de shannon correspondant à l'expression courante en prenant
@@ -102,7 +110,7 @@ public abstract class Expression {
 		if (n == -1) {
 			Noeud_ROBDD newNode = new Noeud_ROBDD(p, n1, n2);
 			G.ajouter(newNode);
-			return G.nb_noeuds() - 1;
+			return newNode.getId();
 		} else {
 			return n;
 		}
