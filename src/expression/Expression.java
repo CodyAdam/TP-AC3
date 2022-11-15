@@ -27,19 +27,11 @@ public abstract class Expression {
 	public abstract Expression simplifier();
 
 	public boolean estVrai() {
-		try {
-			return evalue();
-		} catch (Exception e) {
-			return false;
-		}
+		return this instanceof Constante && ((Constante) this).evalue();
 	}
 
 	public boolean estFaux() {
-		try {
-			return !evalue();
-		} catch (Exception e) {
-			return false;
-		}
+		return this instanceof Constante && !((Constante) this).evalue();
 	}
 
 	// construit l'arbre de shannon correspondant à l'expression courante en prenant
@@ -84,18 +76,14 @@ public abstract class Expression {
 		} else if (F.estFaux()) {
 			return 0;
 		} else {
-//TODO C KC
-			System.out.println("atom = " + atomes_ordonnes.get(0));
-			if (atomes_ordonnes.size() == 1)
-				return -1;
 			String p = atomes_ordonnes.get(0);
-			// On construit le ROBDD de F1 et F2
 			List<String> atomes_ordonnes2 = new LinkedList<String>(atomes_ordonnes);
 			atomes_ordonnes2.remove(0);
-			int n1 = construireROBDD(G, atomes_ordonnes2);
-			List<String> atomes_ordonnes3 = new LinkedList<String>(atomes_ordonnes);
-			atomes_ordonnes3.remove(0);
-			int n2 = construireROBDD(G, atomes_ordonnes3);
+			Expression left = F.remplace(p, false);
+			Expression right = F.remplace(p, true);
+
+			int n1 = left.construireROBDD(G, atomes_ordonnes2);
+			int n2 = right.construireROBDD(G, atomes_ordonnes2);
 			return integrer(n1, n2, G, p);
 		}
 	}
@@ -111,7 +99,7 @@ public abstract class Expression {
 			return n1;
 		}
 		int n = G.obtenirROBDDIndex(p, n1, n2);
-		if (n != -1) {
+		if (n == -1) {
 			Noeud_ROBDD newNode = new Noeud_ROBDD(p, n1, n2);
 			G.ajouter(newNode);
 			return G.nb_noeuds() - 1;
