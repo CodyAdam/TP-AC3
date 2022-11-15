@@ -69,7 +69,17 @@ public class Main {
 	}
 
 	public static void partie3() {
-
+		int N = 4;
+		Expression exp = new Constante(true);
+		List<String> order = new LinkedList<String>();
+		order.add("row1");
+		order.add("col1");
+		order.add("row2");
+		order.add("col2");
+		order.add("row3");
+		order.add("col3");
+		order.add("row4");
+		order.add("col4");
 	}
 
 	public static void main(String[] args) {
