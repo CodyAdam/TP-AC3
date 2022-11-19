@@ -69,16 +69,32 @@ public class Main {
 	}
 
 	public static void partie3() {
-		int N = 4;
+		int N = 2;
 		Expression queen = generateNQueenExpr(N);
+		// print the tree
+		System.out.println(queen.arbre(generateOrder(N)));
+		
+		ROBDD robdd_queen = queen.robdd();
+		System.out.println(robdd_queen);
+		System.out.println(robdd_queen.trouve_sat_queen());
+	}
+
+	public static List<String> generateOrder(int N) {
+		List<String> order = new LinkedList<String>();
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				order.add(i + ","+ j);
+			}
+		}
+		return order;
 	}
 
 	public static Expression generateNQueenExpr(int N){
 		Expression and = new Constante(true);
-		for (int y = 1; y <= N; y++) {
+		for (int y = 0; y < N; y++) {
 			Expression or = new Constante(false);
-			for (int x = 1; x <= N; x++) {
-				or = new Ou(or, new Atome( x + " "+ y));
+			for (int x = 0; x < N; x++) {
+				or = new Ou(or, new Atome( x + ","+ y));
 				Expression queenTargets = getQueenTargets(x, y, N);
 				or = new Ou(or, queenTargets);
 			}
@@ -86,32 +102,36 @@ public class Main {
 		} 
 		return and;
 	}
+
 	public static Expression getQueenTargets(int x, int y, int N) {
+		if (N == 1) {
+			return new Constante(false);
+		}
 		Expression and = new Constante(true);
 
 		// no need for the horizontal check
 		// becquse it is already done in the first loop
 		
 		// vertical check
-		for (int yy = 1; yy <= N; yy++) {
+		for (int yy = 0; yy < N; yy++) {
 			if (yy != y) {
-				and = new Et(and, new Non(new Atome(x + " " + yy)));
+				and = new Et(and, new Non(new Atome(x + "," + yy)));
 			}
 		}
 
 		// diagonal check
-		for (int xx = 1; xx <= N; xx++) {
+		for (int xx = 0; xx < N; xx++) {
 
 			// diagonal /
 			int yy = (x + y) - xx;
-			if (yy >= 1 && yy <= N && xx != x) {
-				and = new Et(and, new Non(new Atome(xx + " " + yy)));
+			if (yy < 0 && yy >= N && xx != x) {
+				and = new Et(and, new Non(new Atome(xx + "," + yy)));
 			}
-
+			
 			// diagonal \
 			yy = xx - y;
-			if (yy >= 1 && yy <= N && xx != x) {
-				and = new Et(and, new Non(new Atome(xx + " " + yy)));
+			if (yy < 0 && yy >= N && xx != x) {
+				and = new Et(and, new Non(new Atome(xx + "," + yy)));
 			}
 		}
 		return and;

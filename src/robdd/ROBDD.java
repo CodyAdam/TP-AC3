@@ -74,4 +74,27 @@ public class ROBDD {
 		}
 		return res.equals("") ? "Pas de chemin" : res;
 	}
+
+	
+	// seek one of the path leading to 1 in the tree
+	// return only the variables that are set to 1
+	public String trouve_sat_queen() {
+		// find path that leads to 1
+		Queue<Integer> q = new LinkedList<Integer>();
+		q.add(1);
+		String res = "";
+		while (q.size() > 0) {
+			int id = q.poll();
+			for (Noeud_ROBDD n : R) {
+				if (n.getIdFilsDroit() == id || n.getIdFilsGauche() == id) {
+					if (n.getIdFilsDroit() == id) {
+						res += "(" + n.getNom() + ")";
+					} 
+					q.add(n.getId());
+					break;
+				}
+			}
+		}
+		return res.equals("") ? "Pas de solutions" : res;
+	}
 }
