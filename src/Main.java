@@ -70,16 +70,51 @@ public class Main {
 
 	public static void partie3() {
 		int N = 4;
-		Expression exp = new Constante(true);
-		List<String> order = new LinkedList<String>();
-		order.add("row1");
-		order.add("col1");
-		order.add("row2");
-		order.add("col2");
-		order.add("row3");
-		order.add("col3");
-		order.add("row4");
-		order.add("col4");
+		Expression queen = generateNQueenExpr(N);
+	}
+
+	public static Expression generateNQueenExpr(int N){
+		Expression and = new Constante(true);
+		for (int y = 1; y <= N; y++) {
+			Expression or = new Constante(false);
+			for (int x = 1; x <= N; x++) {
+				or = new Ou(or, new Atome( x + " "+ y));
+				Expression queenTargets = getQueenTargets(x, y, N);
+				or = new Ou(or, queenTargets);
+			}
+			and = new Et(and, or);
+		} 
+		return and;
+	}
+	public static Expression getQueenTargets(int x, int y, int N) {
+		Expression and = new Constante(true);
+
+		// no need for the horizontal check
+		// becquse it is already done in the first loop
+		
+		// vertical check
+		for (int yy = 1; yy <= N; yy++) {
+			if (yy != y) {
+				and = new Et(and, new Non(new Atome(x + " " + yy)));
+			}
+		}
+
+		// diagonal check
+		for (int xx = 1; xx <= N; xx++) {
+
+			// diagonal /
+			int yy = (x + y) - xx;
+			if (yy >= 1 && yy <= N && xx != x) {
+				and = new Et(and, new Non(new Atome(xx + " " + yy)));
+			}
+
+			// diagonal \
+			yy = xx - y;
+			if (yy >= 1 && yy <= N && xx != x) {
+				and = new Et(and, new Non(new Atome(xx + " " + yy)));
+			}
+		}
+		return and;
 	}
 
 	public static void main(String[] args) {
