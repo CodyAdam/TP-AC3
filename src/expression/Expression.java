@@ -30,6 +30,7 @@ public abstract class Expression {
 		try {
 			return evalue();
 		} catch (Exception e) {
+			// if the expression cannot be evaluated (e.g. contains atoms) : return false
 			return false;
 		}
 	}
@@ -38,6 +39,7 @@ public abstract class Expression {
 		try {
 			return !evalue();
 		} catch (Exception e) {
+			// if the expression cannot be evaluated (e.g. contains atoms) : return false
 			return false;
 		}
 	}
@@ -92,6 +94,7 @@ public abstract class Expression {
 
 			int n1 = left.construireROBDD(G, atomes_ordonnes2);
 			int n2 = right.construireROBDD(G, atomes_ordonnes2);
+
 			return integrer(n1, n2, G, p);
 		}
 	}
@@ -106,12 +109,16 @@ public abstract class Expression {
 		if (n1 == n2) {
 			return n1;
 		}
+
+		// Check if the node already exists
 		int n = G.obtenirROBDDIndex(p, n1, n2);
 		if (n == -1) {
+			// If not, create it and return its index
 			Noeud_ROBDD newNode = new Noeud_ROBDD(p, n1, n2);
 			G.ajouter(newNode);
 			return newNode.getId();
 		} else {
+			// If yes, return its index
 			return n;
 		}
 	}
@@ -122,6 +129,9 @@ public abstract class Expression {
 		return toString(0);
 	}
 
+	/*	
+	 * Used to print the expression with a depth
+	 */
 	public static String indent(int depth) {
 		String s = "";
 		for (int i = 0; i < depth; i++) {

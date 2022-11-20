@@ -104,6 +104,10 @@ public class ROBDD {
 		return res;
 	}
 
+	/*
+	 * Solve the N Queen problem with a ROBDD
+	 * and print the checkerboard if a solution is found
+	 */
 	public static void reines_affiche_sat(int n) {
 		Expression queen = generateNQueenExpr(n);
 		// print the expression
@@ -117,18 +121,18 @@ public class ROBDD {
 			System.out.println("Une solution pour N=" + n + " reines");
 
 			// Draw the chessboard
-			
+
 			// draw a board with boarders using ┌─│├┤└┘┴┬┼
 
 			// Exemple :
 			// ┌──┬──┬──┬──┐
-			// │  │Q │  │  │
+			// │ │Q │ │ │
 			// ├──┼──┼──┼──┤
-			// │  │  │  │Q │
+			// │ │ │ │Q │
 			// ├──┼──┼──┼──┤
-			// │Q │  │  │  │
+			// │Q │ │ │ │
 			// ├──┼──┼──┼──┤
-			// │  │  │Q │  │
+			// │ │ │Q │ │
 			// └──┴──┴──┴──┘
 
 			for (int y = 0; y <= n; y++) {
@@ -185,19 +189,14 @@ public class ROBDD {
 
 	}
 
-	public static List<String> generateOrder(int N) {
-		List<String> order = new LinkedList<String>();
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				order.add(i + "," + j);
-			}
-		}
-		return order;
-	}
-
+	/*
+	 * Generate the expression for N queens problem
+	 */
 	public static Expression generateNQueenExpr(int N) {
 		Expression and = new Constante(true);
+		// AND case of each row
 		for (int y = 0; y < N; y++) {
+			// OR case of each column
 			Expression or = new Constante(false);
 			for (int x = 0; x < N; x++) {
 				Expression queenTargets = getQueenTargets(x, y, N);
@@ -208,6 +207,13 @@ public class ROBDD {
 		return and.simplifier();
 	}
 
+	/*
+	 * Return the expression of the tiles that are attacked by the queen at (x,y)
+	 * (the queen is not included)
+	 * 
+	 * Exemple : getQueenTargets(0,0,3) return the expression : 
+	 * not(1,0) and not(2,0) and not(0,1) and not(0,2) and not(1,1) and not(2,2)
+	 */
 	public static Expression getQueenTargets(int x, int y, int N) {
 		Expression and = new Constante(true);
 
