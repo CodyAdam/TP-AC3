@@ -116,4 +116,17 @@ public abstract class Expression {
 		}
 	}
 
+	public abstract String toString(int depth);
+
+	public String toString() {
+		return toString(0);
+	}
+
+	public static String indent(int depth) {
+		String s = "";
+		for (int i = 0; i < depth; i++) {
+			s += " ";
+		}
+		return s;
+	}
 }

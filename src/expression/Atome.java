@@ -33,4 +33,13 @@ public class Atome extends Expression {
 		return this;
 	}
 
+
+	@Override
+	public String toString() {
+		return "[" +  name+ "]";
+	}
+
+	public String toString(int depth) {
+		return indent(depth) + toString();
+	}
 }

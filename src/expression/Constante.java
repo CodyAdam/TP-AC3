@@ -27,4 +27,11 @@ public class Constante extends Expression {
 		return this;
 	}
 
+	public String toString() {
+		return Boolean.toString(b);
+	}
+
+	public String toString(int depth) {
+		return toString();
+	}
 }

@@ -30,5 +30,14 @@ public class Non extends Expression {
 			return new Constante(true);
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		return  e.toString()  + "!";
+	}
+
+	public String toString(int depth) {
+		return e.toString(depth) + "!";
+	}
 	
 }

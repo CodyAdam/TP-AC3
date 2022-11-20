@@ -39,5 +39,9 @@ public class Ou extends Expression {
 		return this;
 	}
 
-
+	@Override
+	public String toString(int depth) {
+		return indent(depth) + "(\n" + e1.toString(depth + 1) + "\n" +
+				indent(depth + 1) + "OR\n" + e2.toString(depth + 1) + "\n" + indent(depth) + ")";
+	}
 }

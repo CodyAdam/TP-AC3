@@ -6,12 +6,12 @@ import java.util.Set;
 public class Et extends Expression {
 
 	private Expression e1, e2;
-	
+
 	public Et(Expression e1, Expression e2) {
 		this.e1 = e1;
 		this.e2 = e2;
 	}
-	
+
 	public boolean evalue() throws RuntimeException {
 		return e1.evalue() && e2.evalue();
 	}
@@ -24,10 +24,10 @@ public class Et extends Expression {
 	}
 
 	public Expression remplace(String s, boolean b) {
-		return new Et(e1.remplace(s, b),e2.remplace(s, b));
+		return new Et(e1.remplace(s, b), e2.remplace(s, b));
 	}
-	
-	public Expression simplifier(){
+
+	public Expression simplifier() {
 		e1 = e1.simplifier();
 		e2 = e2.simplifier();
 		if (e1.estVrai())
@@ -37,5 +37,10 @@ public class Et extends Expression {
 		if (e1.estFaux() || e2.estFaux())
 			return new Constante(false);
 		return this;
+	}
+
+	public String toString(int depth) {
+		return indent(depth) + "(\n" + e1.toString(depth + 1) + "\n" +
+				indent(depth + 1) + "AND\n" + e2.toString(depth + 1) + "\n" + indent(depth) + ")";
 	}
 }

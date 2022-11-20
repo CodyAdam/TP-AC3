@@ -42,4 +42,13 @@ public class Implique extends Expression {
 		return this;
 	}
 
+	@Override
+	public String toString() {
+		return "(" + e1.toString() + " => " + e2.toString() + ")";
+	}
+
+	public String toString(int depth) {
+		return toString();
+	}
+
 }

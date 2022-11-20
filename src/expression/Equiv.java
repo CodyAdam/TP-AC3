@@ -41,4 +41,13 @@ public class Equiv extends Expression {
 		return new Equiv(e1.remplace(s, b), e2.remplace(s, b));
 	}
 
+	@Override
+	public String toString() {
+		return "(" + e1.toString() + " <=> " + e2.toString() + ")";
+	}
+
+	public String toString(int depth) {
+		return toString();
+	}
+
 }
