@@ -69,7 +69,7 @@ public class Main {
 	}
 
 	public static void partie3() {
-		ROBDD.reines_affiche_sat(4);
+		ROBDD.reines_affiche_sat(5);
 	}
 
 
