@@ -114,11 +114,13 @@ public class ROBDD {
 		// System.out.println(queen);
 
 		ROBDD robdd_queen = queen.robdd();
+		
 		List<String> result = robdd_queen.trouve_sat_list();
 		if (result.size() == 0) {
 			System.out.println("Pas de solution pour N=" + n + " reines");
 		} else {
 			System.out.println("Une solution pour N=" + n + " reines");
+			System.out.println("Nombre de noeud dans le ROBDD : " + robdd_queen.nb_noeuds());
 
 			// Draw the chessboard
 
@@ -211,7 +213,7 @@ public class ROBDD {
 	 * Return the expression of the tiles that are attacked by the queen at (x,y)
 	 * (the queen is not included)
 	 * 
-	 * Exemple : getQueenTargets(0,0,3) return the expression : 
+	 * Exemple : getQueenTargets(0,0,3) return the expression :
 	 * not(1,0) and not(2,0) and not(0,1) and not(0,2) and not(1,1) and not(2,2)
 	 */
 	public static Expression getQueenTargets(int x, int y, int N) {
